@@ -102,12 +102,7 @@ Before you begin, ensure you have [Node.js](https://nodejs.org/) installed on yo
    ```bash
    git clone https://your-repository-url
    ```
-#### Or Just download fresh Framework
-2. Download the Framework:
-   ```bash
-   npm init nilgiri@latest --y
-   ```
-3. Navigate to the project directory:
+2. Navigate to the project directory:
    ```bash
    cd nigiri
    ```
