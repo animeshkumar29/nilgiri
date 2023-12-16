@@ -16,7 +16,7 @@
     
     Before(async function () {
         this.browser = await chromium.launch({
-            headless: false // Set to false to run in headed mode
+            headless: true // Set to false to run in headed mode
         });
         
         const context = await this.browser.newContext({ timeout: 10000 });
