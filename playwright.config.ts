@@ -60,7 +60,7 @@ export default defineConfig({
   use: {
     baseURL: 'https://www.triconinfotech.com/',
     browserName: "chromium",
-    headless:false,
+    headless:true,
     screenshot:'on',
     trace:"off",
     video: 'off',
