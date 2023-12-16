@@ -30,7 +30,7 @@ jobs:
             npm run cucumberRun "${{ inputs.custom_feature_file }}"
           else
             # Run the full suite
-            npm run automation
+            npm run automation -- --headed=false
           fi
 
       - name: Generate Report
