@@ -2,7 +2,7 @@ name: Nilgiri_Automation
 
 on:
   workflow_run:
-    workflows: ["Nilgiri Automation"]
+    workflows: ["Nilgiri_Automation"]
     types:
       - completed
 
