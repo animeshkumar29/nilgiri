@@ -7,7 +7,7 @@ on:
     inputs:
       custom_feature_file:
         description: 'Custom feature file to run test'
-        required: false
+        required: true
         default: ''
 
 jobs:
@@ -26,14 +26,14 @@ jobs:
       - name: Run Tests
         run:
         |
-          echo "Received event: ${{ github.event.client_payload.custom_feature_file }}"
-          echo "Custom feature file: ${{ github.event.client_payload.custom_feature_file }}"
-          if [ -n "${{ github.event.client_payload.custom_feature_file }}" ]; then
-            echo "Running custom feature file: ${{ github.event.client_payload.custom_feature_file }}"
-            npm run cucumberRun "${{ github.event.client_payload.custom_feature_file }}"
+          echo "Received event: ${{ github.event.inputs.custom_feature_file }}"
+          echo "Custom feature file: ${{ github.event.inputs.custom_feature_file }}"
+          # if [ -n "${{ github.event.inputs.custom_feature_file }}" ]; then
+          #   echo "Running custom feature file: ${{ github.event.inputs.custom_feature_file }}"
+          #   npm run cucumberRun "${{ github.event.inputs.custom_feature_file }}"
           else
             # Run the full suite
-            npm run automation -- --headed=false
+            # npm run automation -- --headed=false
           fi
 
       - name: Generate Report
