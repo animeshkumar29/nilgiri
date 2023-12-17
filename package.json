@@ -5,7 +5,7 @@
   "scripts": {
     "nilgiriDependencyInstall": " npm i && npm install -D @playwright/test && npx playwright install",
     "local": "npx playwright test",
-    "cucumberRun": "cucumber-js ${{ github.event.inputs.custom_feature_file || 'test' }} || true",
+    "cucumberRun": "cucumber-js || true",
     "posttest": "ts-node generateReport.ts",
     "automation": "npm run nilgiriDependencyInstall && npm run local && npm run cucumberRun && npm run posttest "
   },
