@@ -38,7 +38,7 @@ jobs:
 
   run_single_file_with_curl:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && -n "${{ github.event.inputs.custom_feature_file }}"
+    if: github.event_name == 'workflow_dispatch' && (github.event.inputs.custom_feature_file || '') != ''
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
