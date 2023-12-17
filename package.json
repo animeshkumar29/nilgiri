@@ -10,14 +10,16 @@
     "automation": "npm run nilgiriDependencyInstall && npm run local && npm run cucumberRun && npm run posttest "
   },
   "dependencies": {
-    "monocart": "^1.1.0",
-    "playwright": "^*",
-    "@playwright/test": "^1.32.2",
-    "nilgirihub": "*",
-    "dotenv": "^16.0.3",
-    "@types/node": "^20.9.2",
-    "ts-node": "^10.9.1",
     "@cucumber/cucumber": "^10.0.1",
-    "multiple-cucumber-html-reporter": "*"
+    "@types/node": "^20.9.2",
+    "dotenv": "^16.0.3",
+    "monocart": "^1.1.0",
+    "multiple-cucumber-html-reporter": "*",
+    "nilgirihub": "*",
+    "playwright": "^*",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.1"
   }
 }
