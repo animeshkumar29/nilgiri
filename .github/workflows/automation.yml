@@ -31,6 +31,12 @@ jobs:
         run:
           npm run sanityTests
 
+      - name: Archive Sanity Test Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: sanity-test-report
+          path: path/to/sanity-test/report/directory
+
   run_single_file_with_curl:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' && -n "${{ github.event.inputs.custom_feature_file }}"
@@ -49,6 +55,12 @@ jobs:
           echo "Running custom feature file: ${{ github.event.inputs.custom_feature_file }}"
           npm run cucumberRun "${{ github.event.inputs.custom_feature_file }} || true"
 
+      - name: Archive Single File with Curl Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: single-file-curl-report
+          path: path/to/single-file-curl/report/directory
+
   run_daily_build:
     runs-on: ubuntu-latest
     if: github.event_name == 'schedule' && github.event.schedule == 'cron(0 0 * * *)'
@@ -65,9 +77,17 @@ jobs:
       - name: Run Daily Build
         run: npm run dailyBuild
 
+      - name: Archive Daily Build Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: daily-build-report
+          path: path/to/daily-build/report/directory
+
   run_tests:
     runs-on: ubuntu-latest
-    if: (github.event_name == 'workflow_dispatch' && -z "${{ github.event.inputs.custom_feature_file }}") || (github.event_name == 'schedule')
+    if: 
+      github.event_name == 'workflow_dispatch' && 
+      -z "${{ github.event.inputs.custom_feature_file }}"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -81,5 +101,46 @@ jobs:
       - name: Run Tests
         run: npm run automation -- --headed=false
 
-      - name: Generate Report
-        run: npm run posttest
+      - name: Archive Test Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-report
+          path: path/to/test/report/directory
+
+  combine_reports:
+    needs: [run_sanity_test_on_dev_push, run_single_file_with_curl, run_daily_build, run_tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Combine Reports
+        run: |
+          # Combine logic here
+          combined_report_path="path/to/combined/report/directory"
+          
+          # Sanity Test Report
+          if [ -f "path/to/sanity-test/report/directory/cucumber_report.json" ]; then
+            cat path/to/sanity-test/report/directory/cucumber_report.json > "$combined_report_path"
+          fi
+
+          # Single File with Curl Report
+          if [ -f "path/to/single-file-curl/report/directory/cucumber_report.json" ]; then
+            cat path/to/single-file-curl/report/directory/cucumber_report.json >> "$combined_report_path"
+          fi
+
+          # Daily Build Report
+          if [ -f "path/to/daily-build/report/directory/cucumber_report.json" ]; then
+            cat path/to/daily-build/report/directory/cucumber_report.json >> "$combined_report_path"
+          fi
+
+          # Test Report
+          if [ -f "path/to/test/report/directory/cucumber_report.json" ]; then
+            cat path/to/test/report/directory/cucumber_report.json >> "$combined_report_path"
+          fi
+
+      - name: Archive Combined Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: combined-report
+          path: path/to/combined/report/directory
