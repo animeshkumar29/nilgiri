@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       custom_feature_file:
-        description: 'Custom feature file to run'
+        description: 'Custom feature file to run test'
         required: false
         default: ''
 
