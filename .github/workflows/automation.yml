@@ -1,18 +1,73 @@
 name: Nilgiri_Automation
 
 on:
-  # schedule:
-  #   - cron: '0 0 * * *'  # Run every night at midnight UTC
+  push:
+    branches:
+      - dev
   workflow_dispatch:
     inputs:
       custom_feature_file:
         description: 'Custom feature file to run test'
         required: true
         default: ''
+  schedule:
+    - cron: '0 0 * * *'  # Run every night at midnight UTC
 
 jobs:
+  run_sanity_test_on_dev_push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm run nilgiriDependencyInstall
+
+      - name: Install Playwright
+        run: npx playwright install
+
+      - name: Run Sanity Tests
+        run:
+          npm run sanityTests
+
+  run_single_file_with_curl:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && -n "${{ github.event.inputs.custom_feature_file }}"
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm run nilgiriDependencyInstall
+
+      - name: Install Playwright
+        run: npx playwright install
+
+      - name: Run Single File with Curl
+        run: |
+          echo "Running custom feature file: ${{ github.event.inputs.custom_feature_file }}"
+          npm run cucumberRun "${{ github.event.inputs.custom_feature_file }} || true"
+
+  run_daily_build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' && github.event.schedule == 'cron(0 0 * * *)'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm run nilgiriDependencyInstall
+
+      - name: Install Playwright
+        run: npx playwright install
+
+      - name: Run Daily Build
+        run: npm run dailyBuild
+
   run_tests:
     runs-on: ubuntu-latest
+    if: (github.event_name == 'workflow_dispatch' && -z "${{ github.event.inputs.custom_feature_file }}") || (github.event_name == 'schedule')
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -24,16 +79,7 @@ jobs:
         run: npx playwright install
 
       - name: Run Tests
-        run:
-        |
-          if [ -n "${{ github.event.inputs.custom_feature_file }}" ]; then
-            echo "Running custom feature file: ${{ github.event.inputs.custom_feature_file }}"
-            npm run cucumberRun "${{ github.event.inputs.custom_feature_file }} || true"
-          else
-            # Run the full suite
-            npm run automation -- --headed=false
-          fi
+        run: npm run automation -- --headed=false
 
       - name: Generate Report
         run: npm run posttest
-        
