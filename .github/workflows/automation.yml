@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 0 * * *'  # Run every night at midnight UTC
   workflow_dispatch:
-    inputs:
+    client_payload:
       custom_feature_file:
         description: 'Custom feature file to run'
         required: false
@@ -25,9 +25,9 @@ jobs:
 
       - name: Run Tests
         run: |
-          if [ -n "${{ inputs.custom_feature_file }}" ]; then
-            echo "Running custom feature file: ${{ inputs.custom_feature_file }}"
-            npm run cucumberRun "${{ inputs.custom_feature_file }}"
+          if [ -n "${{ client_payload.custom_feature_file }}" ]; then
+            echo "Running custom feature file: ${{ client_payload.custom_feature_file }}"
+            npm run cucumberRun "${{ client_payload.custom_feature_file }}"
           else
             # Run the full suite
             npm run automation -- --headed=false
