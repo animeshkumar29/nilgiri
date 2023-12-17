@@ -86,7 +86,7 @@ jobs:
 
   run_tests:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && (github.event.inputs.custom_feature_file == '' || github.event.inputs.custom_feature_file == null)
+    if: github.event_name == 'workflow_dispatch' && (github.event.inputs.custom_feature_file || '') == ''
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
