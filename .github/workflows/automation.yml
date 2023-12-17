@@ -26,8 +26,6 @@ jobs:
       - name: Run Tests
         run:
         |
-          echo "Received event: ${{ github.event.inputs.custom_feature_file }}"
-          echo "Custom feature file: ${{ github.event.inputs.custom_feature_file }}"
           if [ -n "${{ github.event.inputs.custom_feature_file }}" ]; then
             echo "Running custom feature file: ${{ github.event.inputs.custom_feature_file }}"
             npm run cucumberRun "${{ github.event.inputs.custom_feature_file }} || true"
