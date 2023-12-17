@@ -24,10 +24,11 @@ jobs:
         run: npx playwright install
 
       - name: Run Tests
-        run: |
+        run:
+        |
           echo "Received event: ${{ github.event.inputs.custom_feature_file }}"
           echo "Custom feature file: ${{ github.event.inputs.custom_feature_file }}"
-          if [ -n "${{ inputs.custom_feature_file }}" ]; then
+          if [ -n "${{ github.event.inputs.custom_feature_file }}" ]; then
             echo "Running custom feature file: ${{ github.event.inputs.custom_feature_file }}"
             npm run cucumberRun "${{ github.event.inputs.custom_feature_file }}"
           else
