@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 0 * * *'  # Run every night at midnight UTC
   workflow_dispatch:
-    client_payload:
+    inputs:
       custom_feature_file:
         description: 'Custom feature file to run'
         required: false
