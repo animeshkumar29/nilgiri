@@ -25,9 +25,9 @@ jobs:
 
       - name: Run Tests
         run: |
-          if [ -n "${{ client_payload.custom_feature_file }}" ]; then
-            echo "Running custom feature file: ${{ client_payload.custom_feature_file }}"
-            npm run cucumberRun "${{ client_payload.custom_feature_file }}"
+          if [ -n "${{ inputs.client_payload.custom_feature_file }}" ]; then
+            echo "Running custom feature file: ${{ input.client_payload.custom_feature_file }}"
+            npm run cucumberRun "${{ inputs.client_payload.custom_feature_file }}"
           else
             # Run the full suite
             npm run automation -- --headed=false
