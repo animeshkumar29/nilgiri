@@ -24,7 +24,7 @@ jobs:
       - name: Trigger Automation Workflow
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.CURLCOMMAND }}
           script: |
             const featureFile = 'home.feature';
             console.log(`Triggering Automation workflow with feature file: ${featureFile}`);
