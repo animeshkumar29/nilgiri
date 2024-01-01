@@ -29,8 +29,8 @@ jobs:
             const featureFile = 'home.feature';
             console.log(`Triggering Automation workflow with feature file: ${featureFile}`);
             await github.rest.actions.createWorkflowDispatch({
-              owner: animeshkumar29,
-              repo: nilgiriDemo,  
+              owner: 'animeshkumar29',
+              repo: 'nilgiriDemo',  
               workflow: 'DemoNilgiri.yml',
               ref: 'main',
               inputs: {
