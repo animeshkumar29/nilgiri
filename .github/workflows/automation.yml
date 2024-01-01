@@ -28,7 +28,7 @@ jobs:
           script: |
             const featureFile = 'home.feature';
             console.log(`Triggering Automation workflow with feature file: ${featureFile}`);
-            await github.actions.createWorkflowDispatch({
+            await github.rest.actions.createWorkflowDispatch({
               workflow: 'DemoNilgiri.yml',
               ref: 'main',
               inputs: {
