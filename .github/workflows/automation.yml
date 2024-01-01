@@ -16,7 +16,7 @@ on:
 jobs:
   run_sanity_test_on_dev_push:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'main'
+    if: github.event_name == 'push'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
