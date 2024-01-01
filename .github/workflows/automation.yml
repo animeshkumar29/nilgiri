@@ -10,8 +10,8 @@ on:
         description: 'Custom feature file to run test'
         required: false
         default: ''
-  schedule:
-    - cron: '0 0 31 11 *'  # Run on  every night at midnight UTC
+  # schedule:
+  #   - cron: '0 0 31 11 *'  # Run on  every night at midnight UTC
 
 jobs:
   run_sanity_test_on_dev_push:
@@ -69,21 +69,21 @@ jobs:
       #     name: single-file-curl-report
       #     path: /home/runner/work/nilgiri/nilgiri/report
 
-  run_daily_build:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' && github.event.schedule == 'cron(0 0 * * *)'
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+  # run_daily_build:
+  #   runs-on: ubuntu-latest
+  #   if : github.event_name == 'schedule' && github.event.schedule == 'cron(0 0 * * *)'
+  #   steps:
+  #     - name: Checkout Repository
+  #       uses: actions/checkout@v2
 
-      - name: Install Dependencies
-        run: npm run nilgiriDependencyInstall
+  #     - name: Install Dependencies
+  #       run: npm run nilgiriDependencyInstall
 
-      - name: Install Playwright
-        run: npx playwright install
+  #     - name: Install Playwright
+  #       run: npx playwright install
 
-      - name: Run Daily Build
-        run: npm run automation -- --headed=false
+  #     - name: Run Daily Build
+  #       run: npm run automation -- --headed=false
 
       # - name: Archive Daily Build Report
       #   uses: actions/upload-artifact@v2
