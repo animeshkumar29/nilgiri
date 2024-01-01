@@ -95,20 +95,17 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' && (github.event.inputs.custom_feature_file || '') == ''
     steps:
-      - name: Trigger Automation Workflow
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const featureFile = 'home.feature';
-            console.log(`Triggering Automation workflow with feature file: ${featureFile}`);
-            await github.actions.createWorkflowDispatch({
-              workflow: 'DemoNilgiri.yml',
-              ref: 'main',
-              inputs: {
-                custom_feature_file: featureFile,
-              },
-            });
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm run nilgiriDependencyInstall
+
+      - name: Install Playwright
+        run: npx playwright install
+
+      - name: Run Tests
+        run: npm run automation -- --headed=false
       # - name: Archive Test Report
       #   uses: actions/upload-artifact@v2
       #   with:
