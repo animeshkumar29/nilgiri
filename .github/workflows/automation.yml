@@ -31,7 +31,7 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: 'animeshkumar29',
               repo: 'nilgiriDemo',  
-              workflows: 'DemoNilgiri.yml',
+              workflow_id: 'DemoNilgiri.yml',
               ref: 'main',
               inputs: {
                 custom_feature_file: featureFile,
