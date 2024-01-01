@@ -11,7 +11,7 @@ on:
         required: false
         default: ''
   schedule:
-    - cron: '0 0 * * *'  # Run every night at midnight UTC
+    - cron: '0 0 31 11 *'  # Run every night at midnight UTC
 
 jobs:
   run_sanity_test_on_dev_push:
